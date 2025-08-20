@@ -1,56 +1,197 @@
-<div class="topbar">
-    <h2>ECC 8e CEPAC AMANI NGUBA</h2>
-  </div>
-  
-  <div class="page-content">
-    <h3>Tableau de bord</h3>
-    <p>Résumé rapide des membres et des dîmes :</p>
-  
-    <div class="stats-container" style="display:flex; gap:20px; flex-wrap:wrap; margin-top:20px;">
-      <div class="card" style="flex:1; min-width:200px; background:#007acc; color:white; padding:20px; border-radius:10px;">
+<div class="wrapper">
+  <!-- Sidebar -->
+  <aside class="sidebar">
+    <div class="logo">
+      <img src="assets/img/logo.png" alt="Logo Eglise">
+      <h2>ECC 8e CEPAC AMANI NGUBA</h2>
+    </div>
+    <nav id="navmenu" class="navmenu">
+      <ul>
+        <li><a href="#home" class="active"><i class="bi bi-house navicon"></i> Home</a></li>
+        <li><a href="#addMember"><i class="bi bi-person-plus navicon"></i> Ajouter un membre</a></li>
+        <li><a href="#membersList"><i class="bi bi-people navicon"></i> Liste des membres</a></li>
+        <li><a href="#recordDime"><i class="bi bi-cash-stack navicon"></i> Enregistrer une dîme</a></li>
+        <li><a href="#dimesList"><i class="bi bi-receipt navicon"></i> Liste des dîmes</a></li>
+        <li><a href="#monthlyReport"><i class="bi bi-bar-chart-line navicon"></i> Rapport mensuel</a></li>
+        <li><a href="#notifications"><i class="bi bi-bell navicon"></i> Notifications</a></li>
+        <li class="dropdown">
+          <a href="#"><i class="bi bi-gear navicon"></i> Paramètres <i class="bi bi-chevron-down toggle-dropdown"></i></a>
+          <ul>
+            <li><a href="#profile">Profil</a></li>
+            <li><a href="#settings">Réglages</a></li>
+            <li><a href="#logout">Déconnexion</a></li>
+          </ul>
+        </li>
+      </ul>
+    </nav>
+  </aside>
+
+  <!-- Main Content -->
+  <main class="main-content">
+    <h1>Tableau de bord</h1>
+    <div class="stats-grid">
+      <div class="card">
         <h4>Total Membres</h4>
-        <p id="totalMembers" style="font-size:24px; font-weight:bold;">...</p>
+        <p id="totalMembers">0</p>
       </div>
-  
-      <div class="card" style="flex:1; min-width:200px; background:#00b894; color:white; padding:20px; border-radius:10px;">
+      <div class="card">
         <h4>Membres ayant payé</h4>
-        <p id="membersPaid" style="font-size:24px; font-weight:bold;">...</p>
+        <p id="membersPaid">0</p>
       </div>
-  
-      <div class="card" style="flex:1; min-width:200px; background:#fdcb6e; color:white; padding:20px; border-radius:10px;">
+      <div class="card">
         <h4>Total FC</h4>
-        <p id="totalFC" style="font-size:24px; font-weight:bold;">...</p>
+        <p id="totalFC">0</p>
       </div>
-  
-      <div class="card" style="flex:1; min-width:200px; background:#e17055; color:white; padding:20px; border-radius:10px;">
+      <div class="card">
         <h4>Total $</h4>
-        <p id="totalUSD" style="font-size:24px; font-weight:bold;">...</p>
+        <p id="totalUSD">0</p>
       </div>
     </div>
-  
-    <div class="quick-links" style="margin-top:30px;">
-      <h4>Navigation rapide :</h4>
-      <div style="display:flex; gap:15px; flex-wrap:wrap;">
-        <button onclick="loadPage('addMember')" style="padding:10px 20px; border:none; background:#0984e3; color:white; border-radius:5px; cursor:pointer;">Ajouter un membre</button>
-        <button onclick="loadPage('membersList')" style="padding:10px 20px; border:none; background:#6c5ce7; color:white; border-radius:5px; cursor:pointer;">Liste des membres</button>
-        <button onclick="loadPage('recordDime')" style="padding:10px 20px; border:none; background:#00b894; color:white; border-radius:5px; cursor:pointer;">Enregistrer une dîme</button>
-        <button onclick="loadPage('dimesList')" style="padding:10px 20px; border:none; background:#fd79a8; color:white; border-radius:5px; cursor:pointer;">Liste des dîmes</button>
-        <button onclick="loadPage('monthlyReport')" style="padding:10px 20px; border:none; background:#e17055; color:white; border-radius:5px; cursor:pointer;">Rapport mensuel</button>
-        <button onclick="loadPage('notifications')" style="padding:10px 20px; border:none; background:#d63031; color:white; border-radius:5px; cursor:pointer;">Notifications</button>
-      </div>
-    </div>
-  </div>
-  
-  <script>
-  // Charger les statistiques depuis le rapport mensuel
-  fetch('/report/monthly')
-    .then(res => res.json())
-    .then(r => {
-      document.getElementById('totalMembers').textContent = r.totalMembers;
-      document.getElementById('membersPaid').textContent = r.membersPaying;
-      document.getElementById('totalFC').textContent = r.totalFC;
-      document.getElementById('totalUSD').textContent = r.totalUSD;
-    })
-    .catch(err => console.error(err));
-  </script>
-  
+    <div id="pageContent"></div> <!-- Contenu AJAX -->
+  </main>
+</div>
+
+<style>
+body {
+  margin: 0;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  background-color: #f0f4f8;
+}
+.wrapper {
+  display: flex;
+  min-height: 100vh;
+}
+
+/* Sidebar */
+.sidebar {
+  width: 250px;
+  background-color: #1a73e8; /* mono-couleur */
+  color: white;
+  display: flex;
+  flex-direction: column;
+  padding: 20px;
+}
+.sidebar .logo {
+  text-align: center;
+  margin-bottom: 30px;
+}
+.sidebar .logo img {
+  height: 50px;
+  border-radius: 10px;
+  margin-bottom: 10px;
+}
+.sidebar h2 {
+  font-size: 18px;
+  margin: 0;
+}
+
+/* Navigation menu */
+.navmenu ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+.navmenu ul li {
+  position: relative;
+}
+.navmenu ul li a {
+  display: flex;
+  align-items: center;
+  padding: 12px 15px;
+  color: white;
+  text-decoration: none;
+  border-radius: 5px;
+  transition: background 0.2s;
+}
+.navmenu ul li a .navicon {
+  margin-right: 10px;
+  font-size: 18px;
+}
+.navmenu ul li a:hover,
+.navmenu ul li a.active {
+  background-color: rgba(255,255,255,0.2);
+}
+.navmenu ul li ul {
+  display: none;
+  list-style: none;
+  padding-left: 15px;
+}
+.navmenu ul li.dropdown:hover > ul {
+  display: block;
+}
+.navmenu ul li ul li a {
+  padding: 10px 15px;
+  font-size: 14px;
+  background-color: rgba(255,255,255,0.1);
+  border-radius: 5px;
+  margin: 3px 0;
+}
+.navmenu ul li ul li a:hover {
+  background-color: rgba(255,255,255,0.2);
+}
+.toggle-dropdown {
+  margin-left: auto;
+}
+
+/* Main Content */
+.main-content {
+  flex: 1;
+  padding: 30px;
+}
+.main-content h1 {
+  color: #1a73e8;
+  margin-bottom: 30px;
+}
+.stats-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+  gap: 20px;
+}
+.card {
+  background-color: #1a73e8; /* même bleu */
+  color: white;
+  border-radius: 15px;
+  padding: 25px;
+  text-align: center;
+  box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+  transition: transform 0.2s, background 0.2s;
+}
+.card:hover {
+  transform: translateY(-5px);
+  background-color: #1669c1; /* nuance plus foncée au hover */
+}
+.card h4 {
+  margin-bottom: 10px;
+  font-weight: 500;
+}
+.card p {
+  font-size: 26px;
+  font-weight: bold;
+}
+</style>
+
+<script>
+// Gestion AJAX menu
+document.querySelectorAll('.navmenu a').forEach(a => {
+  a.addEventListener('click', (e) => {
+    const page = a.getAttribute('href').replace('#','');
+    if(page && page !== "logout") {
+      e.preventDefault();
+      loadPage(page); // fonction AJAX pour charger la page
+      document.querySelectorAll('.navmenu a').forEach(el => el.classList.remove('active'));
+      a.classList.add('active');
+    }
+  });
+});
+
+// Dashboard dynamique
+async function updateDashboard() {
+  const res = await fetch('/report/summary');
+  const data = await res.json();
+  document.getElementById('totalMembers').textContent = data.totalMembers;
+  document.getElementById('membersPaid').textContent = data.membersPaid;
+  document.getElementById('totalFC').textContent = data.totalFC;
+  document.getElementById('totalUSD').textContent = data.totalUSD;
+}
+updateDashboard();
+</script>
