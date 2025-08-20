@@ -1,0 +1,56 @@
+<div class="topbar">
+    <h2>ECC 8e CEPAC AMANI NGUBA</h2>
+  </div>
+  
+  <div class="page-content">
+    <h3>Tableau de bord</h3>
+    <p>Résumé rapide des membres et des dîmes :</p>
+  
+    <div class="stats-container" style="display:flex; gap:20px; flex-wrap:wrap; margin-top:20px;">
+      <div class="card" style="flex:1; min-width:200px; background:#007acc; color:white; padding:20px; border-radius:10px;">
+        <h4>Total Membres</h4>
+        <p id="totalMembers" style="font-size:24px; font-weight:bold;">...</p>
+      </div>
+  
+      <div class="card" style="flex:1; min-width:200px; background:#00b894; color:white; padding:20px; border-radius:10px;">
+        <h4>Membres ayant payé</h4>
+        <p id="membersPaid" style="font-size:24px; font-weight:bold;">...</p>
+      </div>
+  
+      <div class="card" style="flex:1; min-width:200px; background:#fdcb6e; color:white; padding:20px; border-radius:10px;">
+        <h4>Total FC</h4>
+        <p id="totalFC" style="font-size:24px; font-weight:bold;">...</p>
+      </div>
+  
+      <div class="card" style="flex:1; min-width:200px; background:#e17055; color:white; padding:20px; border-radius:10px;">
+        <h4>Total $</h4>
+        <p id="totalUSD" style="font-size:24px; font-weight:bold;">...</p>
+      </div>
+    </div>
+  
+    <div class="quick-links" style="margin-top:30px;">
+      <h4>Navigation rapide :</h4>
+      <div style="display:flex; gap:15px; flex-wrap:wrap;">
+        <button onclick="loadPage('addMember')" style="padding:10px 20px; border:none; background:#0984e3; color:white; border-radius:5px; cursor:pointer;">Ajouter un membre</button>
+        <button onclick="loadPage('membersList')" style="padding:10px 20px; border:none; background:#6c5ce7; color:white; border-radius:5px; cursor:pointer;">Liste des membres</button>
+        <button onclick="loadPage('recordDime')" style="padding:10px 20px; border:none; background:#00b894; color:white; border-radius:5px; cursor:pointer;">Enregistrer une dîme</button>
+        <button onclick="loadPage('dimesList')" style="padding:10px 20px; border:none; background:#fd79a8; color:white; border-radius:5px; cursor:pointer;">Liste des dîmes</button>
+        <button onclick="loadPage('monthlyReport')" style="padding:10px 20px; border:none; background:#e17055; color:white; border-radius:5px; cursor:pointer;">Rapport mensuel</button>
+        <button onclick="loadPage('notifications')" style="padding:10px 20px; border:none; background:#d63031; color:white; border-radius:5px; cursor:pointer;">Notifications</button>
+      </div>
+    </div>
+  </div>
+  
+  <script>
+  // Charger les statistiques depuis le rapport mensuel
+  fetch('/report/monthly')
+    .then(res => res.json())
+    .then(r => {
+      document.getElementById('totalMembers').textContent = r.totalMembers;
+      document.getElementById('membersPaid').textContent = r.membersPaying;
+      document.getElementById('totalFC').textContent = r.totalFC;
+      document.getElementById('totalUSD').textContent = r.totalUSD;
+    })
+    .catch(err => console.error(err));
+  </script>
+  

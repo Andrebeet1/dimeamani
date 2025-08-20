@@ -1,0 +1,39 @@
+<h3>Enregistrer une dîme</h3>
+<form id="recordDimeForm" style="max-width:500px;">
+  <label>Nom du membre:</label><br>
+  <input type="text" name="nom" required><br><br>
+
+  <label>Postnom:</label><br>
+  <input type="text" name="postnom" required><br><br>
+
+  <label>Section:</label><br>
+  <select name="section" required>
+    <option value="">Sélectionner</option>
+    <option value="maman">Maman</option>
+    <option value="baba">Baba</option>
+    <option value="kinjana">Kinjana</option>
+    <option value="muimbaji">Muimbaji</option>
+    <option value="pasteur">Pasteur</option>
+    <option value="reve">Réve</option>
+    <option value="ev">Ev</option>
+    <option value="chemise">Chemise</option>
+    <option value="kiongozi">Kiongozi</option>
+  </select><br><br>
+
+  <label>Date de paiement:</label><br>
+  <input type="date" name="date" required><br><br>
+
+  <label>Montant en FC:</label><br>
+  <input type="number" name="montant_fc" min="0"><br><br>
+
+  <label>Montant en $:</label><br>
+  <input type="number" name="montant_usd" min="0"><br><br>
+
+  <button type="submit" style="padding:5px 10px; background:#007acc; color:white;">Enregistrer</button>
+</form>
+
+<script>
+window.initPage = function() {
+  window.submitRecordDimeForm('recordDimeForm');
+};
+</script>

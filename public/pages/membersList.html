@@ -1,0 +1,25 @@
+<h3>Liste des membres</h3>
+<input type="text" id="searchMembers" placeholder="Rechercher un membre..." style="margin-bottom:10px; padding:5px; width:100%; max-width:400px;">
+
+<table id="membersTable" style="width:100%; border-collapse: collapse;">
+  <thead style="background-color:#007acc; color:white;">
+    <tr>
+      <th>#</th>
+      <th>Nom</th>
+      <th>Postnom</th>
+      <th>Téléphone</th>
+      <th>Adresse</th>
+      <th>Section</th>
+      <th>Actions</th>
+    </tr>
+  </thead>
+  <tbody></tbody>
+</table>
+
+<div id="paginationMembers" style="margin-top:10px; display:flex; gap:5px; flex-wrap:wrap;"></div>
+
+<script>
+window.initPage = function() {
+  window.fetchMembersList();
+};
+</script>

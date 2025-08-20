@@ -1,0 +1,85 @@
+body {
+    margin: 0;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background-color: #f3f3f3;
+  }
+  
+  /* Sidebar type VS Code */
+  .sidebar {
+    position: fixed;
+    width: 220px;
+    height: 100vh;
+    background-color: #1e1e1e;
+    color: white;
+    padding-top: 20px;
+  }
+  
+  .sidebar .logo {
+    font-size: 18px;
+    text-align: center;
+    margin-bottom: 20px;
+  }
+  
+  .sidebar ul {
+    list-style: none;
+    padding: 0;
+  }
+  
+  .sidebar ul li {
+    padding: 15px 20px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+  }
+  
+  .sidebar ul li i {
+    margin-right: 10px;
+  }
+  
+  .sidebar ul li:hover, .sidebar ul li.active {
+    background-color: #333;
+  }
+  
+  /* Contenu principal */
+  .main-content {
+    margin-left: 220px;
+    padding: 20px;
+    min-height: 100vh;
+  }
+  
+  .topbar {
+    background-color: #007acc;
+    color: white;
+    padding: 10px 20px;
+    margin-bottom: 20px;
+    border-radius: 5px;
+  }
+  
+  .page-content {
+    background-color: white;
+    padding: 20px;
+    border-radius: 5px;
+  }
+  
+  /* Tables et formulaires */
+  table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-bottom: 20px;
+  }
+  
+  table th, table td {
+    border: 1px solid #ccc;
+    padding: 8px;
+    text-align: left;
+  }
+  
+  table th {
+    background-color: #007acc;
+    color: white;
+  }
+  
+  button {
+    margin-right: 5px;
+  }
+  

@@ -1,0 +1,46 @@
+<h3>Reçu de Dîme</h3>
+
+<form id="receiptForm" style="max-width:500px;">
+  <label>Numéro du reçu:</label><br>
+  <input type="text" name="num_recu" placeholder="Ex: Mmjj#080901" required><br><br>
+
+  <label>Nom et Prénom:</label><br>
+  <input type="text" name="nom_prenom" required><br><br>
+
+  <label>Montant payé:</label><br>
+  <input type="number" name="montant" min="0" required><br><br>
+
+  <label>Signature comptable:</label><br>
+  <input type="text" name="signature_comptable"><br><br>
+
+  <label>Révérend:</label><br>
+  <input type="text" name="reverend"><br><br>
+
+  <button type="submit" style="padding:5px 10px; background:#007acc; color:white;">Générer le reçu</button>
+</form>
+
+<div id="receiptPreview" style="margin-top:20px; padding:10px; border:1px solid #ccc;"></div>
+
+<script>
+window.initPage = function() {
+  const form = document.getElementById('receiptForm');
+  const preview = document.getElementById('receiptPreview');
+
+  form.addEventListener('submit', e => {
+    e.preventDefault();
+    const formData = new FormData(form);
+    const data = Object.fromEntries(formData.entries());
+
+    preview.innerHTML = `
+      <h3>Ecc 8e CEPAC AMANI NGUBA</h3>
+      <p>Reçu N°: ${data.num_recu}</p>
+      <p>Nom & Prénom: ${data.nom_prenom}</p>
+      <p>Montant payé: ${data.montant}</p>
+      <p>Signature comptable: ${data.signature_comptable}</p>
+      <p>Rév: ${data.reverend}</p>
+      <hr>
+      <p style="text-align:center;">Merci pour votre contribution !</p>
+    `;
+  });
+};
+</script>

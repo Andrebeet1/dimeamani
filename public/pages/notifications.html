@@ -1,0 +1,33 @@
+<h3>Notifications</h3>
+
+<div id="notificationsList" style="max-width:600px; margin-top:10px; border:1px solid #ccc; padding:10px;">
+  <p>Chargement des notifications...</p>
+</div>
+
+<script>
+window.initPage = function() {
+  const container = document.getElementById('notificationsList');
+
+  fetch('/notifications/list')
+    .then(res => res.json())
+    .then(notifications => {
+      if (notifications.length === 0) {
+        container.innerHTML = '<p>Aucune notification pour le moment.</p>';
+        return;
+      }
+
+      container.innerHTML = '';
+      notifications.forEach(n => {
+        const div = document.createElement('div');
+        div.style.borderBottom = '1px solid #ccc';
+        div.style.padding = '5px 0';
+        div.innerHTML = `<strong>${n.title}</strong><br>${n.message}<small style="color:gray;"> - ${new Date(n.date).toLocaleString()}</small>`;
+        container.appendChild(div);
+      });
+    })
+    .catch(err => {
+      container.innerHTML = `<p style="color:red;">Erreur: ${err.message}</p>`;
+      console.error(err);
+    });
+};
+</script>

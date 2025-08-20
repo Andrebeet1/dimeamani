@@ -1,0 +1,39 @@
+<h3>Ajouter un membre</h3>
+<form id="addMemberForm" style="max-width:500px;">
+  <label>Nom:</label><br>
+  <input type="text" name="nom" required><br><br>
+
+  <label>Postnom:</label><br>
+  <input type="text" name="postnom" required><br><br>
+
+  <label>Date de naissance:</label><br>
+  <input type="date" name="dateNaissance" required><br><br>
+
+  <label>Adresse:</label><br>
+  <input type="text" name="adresse" required><br><br>
+
+  <label>Téléphone:</label><br>
+  <input type="text" name="telephone" required><br><br>
+
+  <label>Section:</label><br>
+  <select name="section" required>
+    <option value="">Sélectionner</option>
+    <option value="maman">Maman</option>
+    <option value="baba">Baba</option>
+    <option value="kinjana">Kinjana</option>
+    <option value="muimbaji">Muimbaji</option>
+    <option value="pasteur">Pasteur</option>
+    <option value="reve">Réve</option>
+    <option value="ev">Ev</option>
+    <option value="chemise">Chemise</option>
+    <option value="kiongozi">Kiongozi</option>
+  </select><br><br>
+
+  <button type="submit" style="padding:5px 10px; background:#007acc; color:white;">Ajouter</button>
+</form>
+
+<script>
+window.initPage = function() {
+  window.submitAddMemberForm('addMemberForm');
+};
+</script>

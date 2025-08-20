@@ -1,0 +1,32 @@
+<h3>Rapport mensuel</h3>
+
+<div style="max-width:600px;">
+  <label>Mois:</label>
+  <input type="month" id="reportMonth"><br><br>
+
+  <button id="generateReport" style="padding:5px 10px; background:#007acc; color:white;">Générer le rapport</button>
+</div>
+
+<div id="reportContent" style="margin-top:20px; border:1px solid #ccc; padding:10px;"></div>
+
+<script>
+window.initPage = function() {
+  document.getElementById('generateReport').addEventListener('click', () => {
+    const month = document.getElementById('reportMonth').value;
+    if (!month) return alert('Sélectionnez un mois');
+
+    fetch(`/report/monthly?month=${month}`)
+      .then(res => res.json())
+      .then(data => {
+        document.getElementById('reportContent').innerHTML = `
+          <p>Nombre de membres: ${data.totalMembers}</p>
+          <p>Nombre de membres payés: ${data.totalPaid}</p>
+          <p>Total FC: ${data.totalFC}</p>
+          <p>Total $: ${data.totalUSD}</p>
+          <p>Taux d'échange: ${data.exchangeRate}</p>
+          <p>Total général en $: ${data.totalGeneralUSD}</p>
+        `;
+      });
+  });
+};
+</script>
