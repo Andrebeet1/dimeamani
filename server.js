@@ -2,15 +2,16 @@ require("dotenv").config();
 const express = require("express");
 const session = require("express-session");
 const path = require("path");
+const fs = require("fs");
 
 const app = express();
 const PORT = process.env.PORT || 3000;
 
-// Middleware
+// Middleware pour JSON et URL-encoded
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
-// Sessions (⚠️ pour production → utiliser connect-pg-simple ou Redis)
+// Sessions (⚠️ Pour production → utiliser connect-pg-simple ou Redis)
 app.use(
   session({
     secret: process.env.SESSION_SECRET || "secret123",
@@ -29,11 +30,17 @@ app.use("/api/report", require("./routes/report"));
 app.use("/api/receipts", require("./routes/receipts"));
 app.use("/api/auth", require("./routes/auth"));
 
-// Route fallback : index.html
+// Route fallback : envoyer index.html pour toutes les autres requêtes
 app.get("*", (req, res) => {
-  res.sendFile(path.join(__dirname, "public/index.html"));
+  const indexPath = path.join(__dirname, "public", "index.html");
+  if (fs.existsSync(indexPath)) {
+    res.sendFile(indexPath);
+  } else {
+    res.status(404).send("404 Not Found - index.html introuvable");
+  }
 });
 
-app.listen(PORT, () =>
-  console.log(`✅ Serveur lancé sur http://localhost:${PORT}`)
-);
+// Lancer le serveur
+app.listen(PORT, () => {
+  console.log(`✅ Serveur lancé sur http://localhost:${PORT}`);
+});
