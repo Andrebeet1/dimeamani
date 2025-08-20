@@ -1,5 +1,5 @@
 <h3>Ajouter un membre</h3>
-<form id="addMemberForm" style="max-width:500px;">
+<form id="addMemberForm" style="max-width:500px;" action="javascript:void(0);">
   <label>Nom:</label><br>
   <input type="text" name="nom" required><br><br>
 
@@ -40,7 +40,7 @@ window.initPage = function() {
   const msgDiv = document.getElementById('addMemberMsg');
 
   form.addEventListener('submit', async (e) => {
-    e.preventDefault();
+    e.preventDefault(); // empêche le rechargement
 
     const formData = new FormData(form);
     const data = {};
@@ -59,6 +59,10 @@ window.initPage = function() {
         msgDiv.textContent = "Membre ajouté avec succès ✅";
         msgDiv.style.color = "green";
         form.reset();
+
+        // Nettoyer l’URL pour enlever les query params
+        history.replaceState(null, '', '/');
+
       } else {
         msgDiv.textContent = `Erreur ❌: ${result.error}`;
         msgDiv.style.color = "red";
