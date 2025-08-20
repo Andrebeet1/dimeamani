@@ -1,27 +1,39 @@
-require('dotenv').config();           // Charger les variables d'environnement
-const express = require('express');
-const path = require('path');
-const session = require('express-session');
+require("dotenv").config();
+const express = require("express");
+const session = require("express-session");
+const path = require("path");
 
 const app = express();
+const PORT = process.env.PORT || 3000;
 
 // Middleware
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
-app.use(express.static(path.join(__dirname, 'public')));
-app.use(session({ secret: 'secret-key', resave: false, saveUninitialized: true }));
 
-// Routes
-app.use('/members', require('./routes/members'));
-app.use('/dimes', require('./routes/dimes'));
-app.use('/auth', require('./routes/auth'));
-app.use('/report', require('./routes/report'));
+// Sessions (⚠️ pour production → utiliser connect-pg-simple ou Redis)
+app.use(
+  session({
+    secret: process.env.SESSION_SECRET || "secret123",
+    resave: false,
+    saveUninitialized: true,
+  })
+);
 
-// Page d'accueil par défaut
-app.get('/', (req, res) => {
-  res.sendFile(path.join(__dirname, 'public/pages/home.html'));
+// Fichiers statiques
+app.use(express.static(path.join(__dirname, "public")));
+
+// Routes API
+app.use("/api/members", require("./routes/members"));
+app.use("/api/dimes", require("./routes/dimes"));
+app.use("/api/report", require("./routes/report"));
+app.use("/api/receipts", require("./routes/receipts"));
+app.use("/api/auth", require("./routes/auth"));
+
+// Route fallback : index.html
+app.get("*", (req, res) => {
+  res.sendFile(path.join(__dirname, "public/index.html"));
 });
 
-// Démarrer serveur
-const PORT = process.env.PORT || 3000;
-app.listen(PORT, () => console.log(`Serveur lancé sur le port ${PORT}`));
+app.listen(PORT, () =>
+  console.log(`✅ Serveur lancé sur http://localhost:${PORT}`)
+);
