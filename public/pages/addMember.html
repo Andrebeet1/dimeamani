@@ -7,7 +7,7 @@
   <input type="text" name="postnom" required><br><br>
 
   <label>Date de naissance:</label><br>
-  <input type="date" name="dateNaissance" required><br><br>
+  <input type="date" name="date_naissance" required><br><br>
 
   <label>Adresse:</label><br>
   <input type="text" name="adresse" required><br><br>
@@ -40,29 +40,33 @@ window.initPage = function() {
   const msgDiv = document.getElementById('addMemberMsg');
 
   form.addEventListener('submit', async (e) => {
-    e.preventDefault(); // empêcher le rechargement
+    e.preventDefault();
 
     const formData = new FormData(form);
     const data = {};
     formData.forEach((value, key) => data[key] = value);
 
     try {
-      const res = await fetch('/api/members', {
+      const res = await fetch('/api/members/add', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(data)
       });
 
-      if (!res.ok) throw new Error(`HTTP ${res.status}`);
       const result = await res.json();
 
-      msgDiv.textContent = "Membre ajouté avec succès ✅";
-      msgDiv.style.color = "green";
-      form.reset();
+      if(result.success) {
+        msgDiv.textContent = "Membre ajouté avec succès ✅";
+        msgDiv.style.color = "green";
+        form.reset();
+      } else {
+        msgDiv.textContent = `Erreur ❌: ${result.error}`;
+        msgDiv.style.color = "red";
+      }
 
     } catch (err) {
       console.error(err);
-      msgDiv.textContent = "Erreur lors de l'ajout du membre ❌";
+      msgDiv.textContent = "Erreur serveur ❌";
       msgDiv.style.color = "red";
     }
   });
