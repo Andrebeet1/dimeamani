@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Dîme Amani NGUBA</title>
+  <link rel="stylesheet" href="/css/style.css">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css">
+</head>
+<body class="dark-theme">
+
+  <!-- Header -->
+  <header>
+    <h1>📊 ECC 8e CEPAC AMANI NGUBA</h1>
+  </header>
+
+  <div class="container">
+    <!-- Sidebar -->
+    <aside class="sidebar">
+      <ul>
+        <li data-page="home" class="active"><i class="bi bi-house"></i> Accueil</li>
+        <li data-page="addMember"><i class="bi bi-person-plus"></i> Ajouter Membre</li>
+        <li data-page="membersList"><i class="bi bi-people"></i> Liste Membres</li>
+        <li data-page="recordDime"><i class="bi bi-currency-dollar"></i> Enregistrer Dîme</li>
+        <li data-page="dimesList"><i class="bi bi-wallet2"></i> Liste Dîmes</li>
+        <li data-page="monthlyReport"><i class="bi bi-bar-chart"></i> Rapport Mensuel</li>
+        <li data-page="notifications"><i class="bi bi-bell"></i> Notifications</li>
+      </ul>
+    </aside>
+
+    <!-- Main Content -->
+    <main id="pageContent">
+      <h2>Tableau de Bord</h2>
+
+      <!-- Cartes statistiques -->
+      <div class="dashboard-cards">
+        <div class="card">
+          <h3>Total Membres</h3>
+          <p id="totalMembers">0</p>
+        </div>
+        <div class="card">
+          <h3>Membres ayant payé</h3>
+          <p id="membersPaid">0</p>
+        </div>
+        <div class="card">
+          <h3>Total FC</h3>
+          <p id="totalFC">0</p>
+        </div>
+        <div class="card">
+          <h3>Total $</h3>
+          <p id="totalUSD">0</p>
+        </div>
+      </div>
+
+      <!-- Carousel résumé -->
+      <div class="carousel" id="dashboardCarousel">
+        <div class="carousel-item">📋 Liste des membres</div>
+        <div class="carousel-item">💰 Liste des dîmes</div>
+        <div class="carousel-item">🧾 Rapports mensuels</div>
+        <div class="carousel-item">🖊️ Reçus</div>
+      </div>
+    </main>
+  </div>
+
+  <script src="/js/main.js"></script>
+</body>
+</html>
