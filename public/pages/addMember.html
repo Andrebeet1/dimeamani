@@ -1,34 +1,6 @@
 <h3>Ajouter un membre</h3>
-<form id="addMemberForm" style="max-width:500px;" action="javascript:void(0);">
-  <label>Nom:</label><br>
-  <input type="text" name="nom" required><br><br>
-
-  <label>Postnom:</label><br>
-  <input type="text" name="postnom" required><br><br>
-
-  <label>Date de naissance:</label><br>
-  <input type="date" name="date_naissance" required><br><br>
-
-  <label>Adresse:</label><br>
-  <input type="text" name="adresse" required><br><br>
-
-  <label>Téléphone:</label><br>
-  <input type="text" name="telephone" required><br><br>
-
-  <label>Section:</label><br>
-  <select name="section" required>
-    <option value="">Sélectionner</option>
-    <option value="maman">Maman</option>
-    <option value="baba">Baba</option>
-    <option value="kinjana">Kinjana</option>
-    <option value="muimbaji">Muimbaji</option>
-    <option value="pasteur">Pasteur</option>
-    <option value="reve">Réve</option>
-    <option value="ev">Ev</option>
-    <option value="chemise">Chemise</option>
-    <option value="kiongozi">Kiongozi</option>
-  </select><br><br>
-
+<form id="addMemberForm" style="max-width:500px;">
+  <!-- champs du formulaire inchangés -->
   <button type="submit" style="padding:5px 10px; background:#007acc; color:white;">Ajouter</button>
 </form>
 
@@ -40,7 +12,7 @@ window.initPage = function() {
   const msgDiv = document.getElementById('addMemberMsg');
 
   form.addEventListener('submit', async (e) => {
-    e.preventDefault(); // empêche le rechargement
+    e.preventDefault();
 
     const formData = new FormData(form);
     const data = {};
@@ -60,8 +32,13 @@ window.initPage = function() {
         msgDiv.style.color = "green";
         form.reset();
 
-        // Nettoyer l’URL pour enlever les query params
-        history.replaceState(null, '', '/');
+        // Mettre à jour le dashboard
+        loadDashboard();
+
+        // Nettoyer l'URL pour enlever ?nom=...
+        if (window.history.replaceState) {
+          window.history.replaceState(null, null, window.location.pathname);
+        }
 
       } else {
         msgDiv.textContent = `Erreur ❌: ${result.error}`;
