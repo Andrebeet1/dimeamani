@@ -1,3 +1,4 @@
+// Charger une page HTML
 function loadPage(page) {
   fetch(`/pages/${page}.html`)
     .then(res => res.text())
@@ -5,7 +6,12 @@ function loadPage(page) {
       document.getElementById("pageContent").innerHTML = html;
       document.querySelectorAll(".sidebar ul li").forEach(li => li.classList.remove("active"));
       document.querySelector(`.sidebar ul li[data-page="${page}"]`).classList.add("active");
-      if(page === "home") loadDashboard();
+
+      // Si page accueil, charger le dashboard
+      if (page === "home") loadDashboard();
+
+      // Initialiser les scripts spécifiques à la page
+      if (window.initPage) window.initPage();
     })
     .catch(err => console.error("Erreur chargement page :", err));
 }
@@ -30,3 +36,10 @@ loadPage("home");
 document.querySelectorAll(".sidebar ul li").forEach(li => {
   li.addEventListener("click", () => loadPage(li.dataset.page));
 });
+
+// Fonction pour nettoyer URL après soumission de formulaire
+function cleanUrl() {
+  if (window.history.replaceState) {
+    window.history.replaceState(null, null, window.location.pathname);
+  }
+}
